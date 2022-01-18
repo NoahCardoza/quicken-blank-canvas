@@ -77,7 +77,6 @@ const setupKeybindings = (turtle) => {
         // _.throttle would allow functions to be triggered
         // after the keys were lifted up
         if (controller.throttle > 0) {
-          console.log(controller.lastExceuted,  Date.now(),  controller.throttle);
           if (controller.lastExceuted > Date.now() - controller.throttle) {
             return
           }

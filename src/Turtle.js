@@ -1,3 +1,5 @@
+import Rocket from './Rocket'
+
 /**
  * This should probably by called "Spaceship" unless you know of any
  * turtles that shoot blocks... 
@@ -38,6 +40,8 @@ class Turtle {
     this.penDown = true;
     this.penColor = '#000000';
     this.lineWidth = 2;
+
+    this.rockets = []
   }
 
   logPenStatus() {
@@ -95,6 +99,15 @@ class Turtle {
     if (Math.abs(this.vy) < .1) {
       this.vy = 0
     }
+
+    // iterate through all the rockets spawned by the turtle
+    this.rockets = this.rockets.reduce((rockets, rocket) => {
+      // reomve rockets that have collided with an enemy or left the screen
+      if (rocket.animate()) {
+        return [...rockets, rocket]
+      }
+      return rockets
+    }, [])
   }
 
   // reposition turtle
@@ -110,6 +123,11 @@ class Turtle {
     shiftDown(speed = 1) {
     this.vy = constainVelocity(this.vy + speed);
   };
+
+  // TODO: move this inot hte Turtle.js file
+  spawnRocket () {
+    this.rockets.push(new Rocket(this.ctx, this.x, this.y))
+  }
 }
 
 export default Turtle

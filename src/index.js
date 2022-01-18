@@ -88,31 +88,6 @@ function clearCanvas() {
   }
 }
 
-// =======================================================
-//      Rocket functions
-// =======================================================
-
-// TODO: refactor into it's own file
-class Rocket {
-  constructor(ctx, x, y) {
-    this.ctx = ctx
-    this.x = x
-    this.y = y
-  }
-
-  animate() {
-    this.y += 10;
-    this.ctx.fillRect(this.x, this.y, 5, 5);
-  }
-
-}
-
-// TODO: move this inot hte Turtle.js file
-turtle.spawnRocket = function () {
-  rockets.push(new Rocket(this.ctx, this.x, this.y))
-
-}
-
 const registerKeybindings = setupKeybindings(turtle);
 const gameLoop = () => {
   const context = canvas.getContext('2d');
@@ -121,7 +96,7 @@ const gameLoop = () => {
 
   context.clearRect(0, 0, canvas.width, canvas.height);
   turtle.animate()
-  rockets.map(rocket => { rocket.animate() })
+  
   requestAnimationFrame(gameLoop)
 }
 
