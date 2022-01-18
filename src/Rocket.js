@@ -1,15 +1,6 @@
-// =======================================================
-//      Rocket functions
-// =======================================================
+import Sprite from './Sprite'
 
-
-class Rocket {
-  constructor(ctx, x, y) {
-    this.ctx = ctx
-    this.x = x
-    this.y = y
-  }
-
+class Rocket extends Sprite {
   /**
    * renders the rocket on the canvas
    * 
@@ -17,6 +8,7 @@ class Rocket {
    */
   animate() {
     this.y += 10;
+    this.ctx.fillStyle = 'blue'
     this.ctx.fillRect(this.x, this.y, 5, 5);
     
     if (this.y > this.ctx.canvas.height) {

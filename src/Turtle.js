@@ -1,4 +1,5 @@
 import Rocket from './Rocket'
+import Sprite from './Sprite'
 
 /**
  * This should probably by called "Spaceship" unless you know of any
@@ -24,28 +25,16 @@ const constainVelocity = (velocity) => {
 
 // while I usually don't like using classes
 // I do find them uesul when dealing with animations
-class Turtle {
+class Turtle extends Sprite {
   constructor(ctx) {
-    this.ctx = ctx
+    super(ctx, 360, 200);
 
-    // position
-    this.x = 360;
-    this.y = 200;
-
-    // velocity
-    this.vx = 0;
-    this.vy = 0;
-
-    this.angle = 0;
-    this.penDown = true;
-    this.penColor = '#000000';
-    this.lineWidth = 2;
-
+    // this will hold the rockets fired by the turtle
     this.rockets = []
   }
 
   logPenStatus() {
-    console.log(`x=${this.x}; y=${this.y}; angle = ${this.angle}; penDown = ${this.penDown}`);
+    console.log(`x=${this.x}; y=${this.y};`);
   };
 
   /**
@@ -86,6 +75,7 @@ class Turtle {
     this.ctx.moveTo(this.x, this.y);
     this.ctx.lineTo(this.x - 10, this.y - 25);
     this.ctx.lineTo(this.x + 10, this.y - 25);
+    this.ctx.fillStyle = 'black'
     this.ctx.fill();
 
     // manage velocity

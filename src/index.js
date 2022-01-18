@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './styles.js';
 import Turtle from './Turtle.js';
+import Enemy from './Enemy.js';
 import _ from 'lodash';
 import setupKeybindings from './keybindings'
+import { chance, randint } from './utils'
 
 
 const turtle = new Turtle();
@@ -88,14 +90,22 @@ function clearCanvas() {
   }
 }
 
+const enemies = []
+
 const registerKeybindings = setupKeybindings(turtle);
 const gameLoop = () => {
   const context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
   
   registerKeybindings()
 
-  context.clearRect(0, 0, canvas.width, canvas.height);
   turtle.animate()
+
+  if (chance(1)) {
+    enemies.push(new Enemy(context))
+  }
+
+  enemies.map(enemy => enemy.animate());
   
   requestAnimationFrame(gameLoop)
 }
