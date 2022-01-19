@@ -9,15 +9,15 @@ import Sprite from './Sprite'
  * but in the interest of time, that's not a high priority
  */
 
-const MAX_VELOCITY = 3;
+const MAX_VELOCITY = 20;
 
 /**
  * Makes sure objects don't move too fast
  * @param {int} velocity the x/y velocity of an object on the canvas
  * @returns a bounded number (MAX_VELOCITY) either positive or negative
  */
-const constainVelocity = (velocity) => {
-  if(Math.abs(MAX_VELOCITY) > MAX_VELOCITY) {
+const constrainVelocity = (velocity) => {
+  if(Math.abs(velocity) > MAX_VELOCITY) {
     return Math.sign(velocity) * MAX_VELOCITY;
   }
   return velocity;
@@ -101,17 +101,17 @@ class Turtle extends Sprite {
   }
 
   // reposition turtle
-    shiftLeft(speed = 1) {
-      this.vx = constainVelocity(this.vx - speed)
+    shiftLeft(speed = .7) {
+      this.vx = constrainVelocity(this.vx - speed)
   };
-    shiftRight(speed = 1) {
-    this.vx = constainVelocity(this.vx + speed);
+    shiftRight(speed = .7) {
+    this.vx = constrainVelocity(this.vx + speed);
   };
-    shiftUp(speed = 1) {
-    this.vy = constainVelocity(this.vy - speed);
+    shiftUp(speed = .7) {
+    this.vy = constrainVelocity(this.vy - speed);
   };
-    shiftDown(speed = 1) {
-    this.vy = constainVelocity(this.vy + speed);
+    shiftDown(speed = .7) {
+    this.vy = constrainVelocity(this.vy + speed);
   };
 
   // TODO: move this inot hte Turtle.js file
