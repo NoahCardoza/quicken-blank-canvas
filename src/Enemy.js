@@ -1,13 +1,12 @@
-import Rocket from './Rocket'
 import Sprite from './Sprite'
-import { randint } from './utils'
+import { randint } from './utils/math'
 
 const HEIGHT = 20;
 
 class Enemy extends Sprite {
-  constructor(ctx) {
+  constructor(game) {
     // TODO: make sure they aren't rendered off the sides of the canvas
-    super(ctx, randint(0, ctx.canvas.width ) , ctx.canvas.height + HEIGHT);
+    super(game.canvas.getContext('2d'), randint(0, game.canvas.width ) , game.canvas.height + HEIGHT);
   }
 
   /**
@@ -28,8 +27,10 @@ class Enemy extends Sprite {
     this.ctx.fill();
 
     if (this.y < 0) {
-      this.y = 0
+      return false;
     }
+
+    return true
   }
 }
 

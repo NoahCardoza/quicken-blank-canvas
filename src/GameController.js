@@ -1,7 +1,6 @@
 import KeyboardController, { KEYS } from './KeyboardController'
-import { chance } from './utils'
 import Turtle from './Turtle.js';
-import Enemy from './Enemy.js';
+import EnemyController from './EnemyController.js';
 
 
 class GameController {
@@ -11,7 +10,7 @@ class GameController {
     
     this.turtle = new Turtle(this.canvas.getContext('2d'));
 
-    this.enemies = []
+    this.enemies = EnemyController(this)
     
     this.keybindings = KeyboardController({
       [KEYS.UP]: {
@@ -50,13 +49,9 @@ class GameController {
     
     this.keybindings.tick();
 
-    this.turtle.animate()
+    this.turtle.animate();
 
-    if (chance(1)) {
-      this.enemies.push(new Enemy(context))
-    }
-
-    this.enemies.map(enemy => enemy.animate());
+    this.enemies.tick();
     
     if (this.running) {
       requestAnimationFrame(this.tick.bind(this))

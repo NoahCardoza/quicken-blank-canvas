@@ -1,5 +1,6 @@
 import Rocket from './Rocket'
 import Sprite from './Sprite'
+import { renderAndReduceChildSprites } from './utils/animation'
 
 /**
  * This should probably by called "Spaceship" unless you know of any
@@ -91,13 +92,7 @@ class Turtle extends Sprite {
     }
 
     // iterate through all the rockets spawned by the turtle
-    this.rockets = this.rockets.reduce((rockets, rocket) => {
-      // reomve rockets that have collided with an enemy or left the screen
-      if (rocket.animate()) {
-        return [...rockets, rocket]
-      }
-      return rockets
-    }, [])
+    this.rockets = this.rockets.reduce(renderAndReduceChildSprites, [])
   }
 
   // reposition turtle
