@@ -1,7 +1,7 @@
 class Sprite {
   constructor(ctx, x, y) {
     this.ctx = ctx;
-    
+
     // position
     this.x = x;
     this.y = y;

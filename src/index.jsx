@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import styles from './styles.js';
 import _ from 'lodash';
-import GameController from './GameController'
+import styles from './styles';
+import GameController from './GameController';
 
 function ReactRoot() {
-  // reactive width since we'll be updating it on window resize 
+  // reactive width since we'll be updating it on window resize
   const [width, setWidth] = useState(window.innerWidth);
   const height = 720;
 
@@ -13,7 +13,7 @@ function ReactRoot() {
   window.addEventListener('resize', _.throttle(() => {
     setWidth(window.innerWidth);
   }, 100), {
-    passive: true 
+    passive: true,
   });
 
   return (
@@ -24,7 +24,8 @@ function ReactRoot() {
         </h1>
       </div>
       <div style={styles.column}>
-        {/* <button
+        {/* TODO: change this to a restart button?
+        <button
           onClick={clearCanvas}
           style={styles.button}
         >
@@ -37,8 +38,7 @@ function ReactRoot() {
             height={height}
           />
         </div>
-        {/*
-        TODO: add some game options here?
+        {/* TODO: add some game options here?
         <div style={{ ...styles.row, ...styles.spacer }}>
           {moveArray.map((key) => (
             <button
@@ -55,17 +55,25 @@ function ReactRoot() {
     </div>
   );
 }
-// react insertion
-const wrapper = document.getElementById('react-entry');
-wrapper ? ReactDOM.render(<ReactRoot />, wrapper) : false;
 
-// canvas preparation
-const canvas = document.getElementById('myDrawing');
+function app() {
+  // react insertion
+  const wrapper = document.getElementById('react-entry');
+  if (wrapper) {
+    ReactDOM.render(<ReactRoot />, wrapper);
+  }
 
-if (!(canvas && canvas.getContext)) { // does the browser support 'canvas'?
-  alert('You need a browser which supports the HTML5 canvas!');
+  // canvas preparation
+  const canvas = document.getElementById('myDrawing');
+
+  if (!(canvas && canvas.getContext)) { // does the browser support 'canvas'?
+    // eslint-disable-next-line no-alert
+    alert('You need a browser which supports the HTML5 canvas!');
+  }
+
+  const game = new GameController(canvas);
+
+  game.beginLoop();
 }
 
-const game = new GameController(canvas);
-
-game.beginLoop();
+app();

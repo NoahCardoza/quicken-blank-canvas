@@ -9,7 +9,8 @@ export const KEYS = {
 /**
  * This function sets up all the logic to handle the keyboard events
  * @constructor
- * @param {Object} keybindings - an object defineing callbacks to be executed when a specified key is clicked
+ * @param {Object} keybindings - an object defineing callbacks to be executed
+ *                               when a specified key is clicked
  * @example
  *   {
  *      [KEYS.UP]: { // the key in question
@@ -22,8 +23,7 @@ export const KEYS = {
  */
 const KeyboardController = (keybindings) => {
   // initiate the config with the needed properties
-  console.log(keybindings);
-  keybindings = Object.keys(keybindings)
+  const config = Object.keys(keybindings)
     .reduce((col, key) => ({
       ...col,
       [key]: {
@@ -31,46 +31,45 @@ const KeyboardController = (keybindings) => {
         throttle: 0,
         lastExceuted: 0,
         ...keybindings[key],
-      }
-    }), {})
-  
-  console.log(keybindings);
-  
-  // little hack since JavaScript will only report one key at a time 
-  document.addEventListener("keydown", (event) => {
-    if(keybindings[event.code]){
-      keybindings[event.code].pressed = true
-    }
-  })
+      },
+    }), {});
 
-  document.addEventListener("keyup", (event) => {
-    if(keybindings[event.code]){
-      keybindings[event.code].pressed = false
+  // little hack since JavaScript will only report one key at a time
+  document.addEventListener('keydown', (event) => {
+    if (config[event.code]) {
+      config[event.code].pressed = true;
     }
-  })
+  });
 
-  
+  document.addEventListener('keyup', (event) => {
+    if (config[event.code]) {
+      config[event.code].pressed = false;
+    }
+  });
+
   return {
     // callback to run in the event loop
     tick: () => {
-      Object.keys(keybindings).forEach(key => {
-        const controller = keybindings[key];
+      Object.keys(config).forEach((key) => {
+        const controller = config[key];
         if (controller.pressed) {
           // small bit of code to throttle certian keys
           // _.throttle would allow functions to be triggered
           // after the keys were lifted up
           if (controller.throttle > 0) {
             if (controller.lastExceuted > Date.now() - controller.throttle) {
-              return
+              return;
             }
           }
-          controller.lastExceuted = Date.now()
-          controller.execute()
+          controller.lastExceuted = Date.now();
+          controller.execute();
         }
-        keybindings[key].pressed && keybindings[key].execute()
-      })
-    }
-  }
-}
+        if (config[key].pressed) {
+          config[key].execute();
+        }
+      });
+    },
+  };
+};
 
-export default KeyboardController; 
+export default KeyboardController;
