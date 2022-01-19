@@ -20,8 +20,6 @@ class Enemy extends Sprite {
     // apply velocity
     this.y -= 5;
 
-    console.log(this.y);
-
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     this.ctx.lineTo(this.x - 10, this.y + 25);

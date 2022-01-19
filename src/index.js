@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './styles.js';
-import Turtle from './Turtle.js';
-import Enemy from './Enemy.js';
 import _ from 'lodash';
-import setupKeybindings from './keybindings'
-import { chance, randint } from './utils'
-
-
-const turtle = new Turtle();
-const rockets = [];
-const moveArray = ['shiftLeft', 'shiftRight', 'shiftUp', 'shiftDown'];
+import GameController from './GameController'
 
 function ReactRoot() {
   // reactive width since we'll be updating it on window resize 
@@ -32,12 +24,12 @@ function ReactRoot() {
         </h1>
       </div>
       <div style={styles.column}>
-        <button
+        {/* <button
           onClick={clearCanvas}
           style={styles.button}
         >
           Reset Game
-        </button>
+        </button> */}
         <div style={{ ...styles.canvasWrapper, width: width + 2, height: height + 2 }}>
           <canvas
             id="myDrawing"
@@ -67,47 +59,13 @@ function ReactRoot() {
 const wrapper = document.getElementById('react-entry');
 wrapper ? ReactDOM.render(<ReactRoot />, wrapper) : false;
 
-// =====================================================================================
-//                                  GRAPHICS
-// =====================================================================================
-
 // canvas preparation
 const canvas = document.getElementById('myDrawing');
 
-if (canvas && canvas.getContext) { // does the browser support 'canvas'?
-  turtle.canvas = canvas
-  turtle.ctx = canvas.getContext('2d'); // get drawing context
-} else {
+if (!(canvas && canvas.getContext)) { // does the browser support 'canvas'?
   alert('You need a browser which supports the HTML5 canvas!');
 }
 
-function clearCanvas() {
-  if (canvas && canvas.getContext) {
-    const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    turtle.x = 360;
-    turtle.y = 200;
-  }
-}
+const game = new GameController(canvas);
 
-const enemies = []
-
-const registerKeybindings = setupKeybindings(turtle);
-const gameLoop = () => {
-  const context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  
-  registerKeybindings()
-
-  turtle.animate()
-
-  if (chance(1)) {
-    enemies.push(new Enemy(context))
-  }
-
-  enemies.map(enemy => enemy.animate());
-  
-  requestAnimationFrame(gameLoop)
-}
-
-gameLoop()
+game.beginLoop();
