@@ -1,5 +1,5 @@
-import Sprite from './Sprite'
-import { randint } from '../utils/math'
+import Sprite from '@/sprites/Sprite'
+import { randint } from '@/utils/math'
 
 const HEIGHT = 20;
 

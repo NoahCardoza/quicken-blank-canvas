@@ -1,4 +1,4 @@
-import Sprite from './Sprite'
+import Sprite from '@/sprites/Sprite'
 
 class Rocket extends Sprite {
   /**
