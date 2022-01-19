@@ -1,4 +1,4 @@
-import Enemy from './Enemy.js';
+import Enemy from './sprites/Enemy.js';
 import { chance } from './utils/math'
 import { renderAndReduceChildSprites } from './utils/animation'
 

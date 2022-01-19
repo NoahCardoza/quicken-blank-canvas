@@ -1,5 +1,5 @@
 import KeyboardController, { KEYS } from './KeyboardController'
-import Turtle from './Turtle.js';
+import Turtle from './sprites/Turtle.js';
 import EnemyController from './EnemyController.js';
 
 

@@ -1,6 +1,6 @@
 import Rocket from './Rocket'
 import Sprite from './Sprite'
-import { renderAndReduceChildSprites } from './utils/animation'
+import { renderAndReduceChildSprites } from '../utils/animation'
 
 /**
  * This should probably by called "Spaceship" unless you know of any
